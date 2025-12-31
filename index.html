@@ -233,7 +233,7 @@
             for (let i = 2; i <= cant; i++) {
                 div.innerHTML += `
                     <div class="acomp-box">
-                        <label>Nombre Acompañante ${i} 👥</label>
+                        <label>Acompañante ${i} 👥</label>
                         <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;">
                         <div class="fila-triple">
                             <div style="flex: 2;">
@@ -259,28 +259,38 @@
         btn.disabled = true;
         btn.innerText = "ENVIANDO DATOS... 🌊";
 
-        let acomps = "";
         const nombresA = document.getElementsByClassName('acomp-nombre');
         const cedulasA = document.getElementsByClassName('acomp-cedula');
         const edadesA = document.getElementsByClassName('acomp-edad');
 
-        for(let i=0; i < nombresA.length; i++) {
-            acomps += `(${i+2}) ${nombresA[i].value}, CI: ${cedulasA[i].value}, Edad: ${edadesA[i].value} | `;
-        }
-
-        const datos = {
+        let payload = [];
+        
+        // 1. Fila del Responsable
+        payload.push({
             "Responsable": nombreResp,
             "Cedula": document.getElementById('cedula').value,
             "Edad": document.getElementById('edad').value,
             "Telefono": document.getElementById('tel').value,
             "Cantidad": document.getElementById('cantidad').value,
-            "Acompanantes": acomps
-        };
+            "Acompanantes": "-" 
+        });
+
+        // 2. Filas de los acompañantes (una fila por cada uno)
+        for(let i=0; i < nombresA.length; i++) {
+            payload.push({
+                "Responsable": nombresA[i].value,
+                "Cedula": cedulasA[i].value,
+                "Edad": edadesA[i].value,
+                "Telefono": "-",
+                "Cantidad": "-",
+                "Acompanantes": "Acomp de " + nombreResp
+            });
+        }
 
         fetch('https://sheetdb.io/api/v1/2i9kwinmtej7k', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: [datos] })
+            body: JSON.stringify({ data: payload })
         })
         .then(res => {
             alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨");
