@@ -85,11 +85,11 @@
         }
 
         .acomp-box {
-            background: #e0f7fa;
+            background: #fdf2f2;
             padding: 15px;
             border-radius: 15px;
             margin-top: 15px;
-            border-left: 6px solid var(--sol);
+            border-left: 6px solid var(--coral);
         }
 
         .btn-enviar {
@@ -233,16 +233,8 @@
             for (let i = 2; i <= cant; i++) {
                 div.innerHTML += `
                     <div class="acomp-box">
-                        <label>Pasajero ${i} (Acompañante) 👥</label>
-                        <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;">
-                        <div class="fila-triple">
-                            <div style="flex: 2;">
-                                <input type="number" class="acomp-cedula" placeholder="Cédula">
-                            </div>
-                            <div style="flex: 1;">
-                                <input type="number" class="acomp-edad" placeholder="Edad">
-                            </div>
-                        </div>
+                        <label>Acompañante ${i} 👥</label>
+                        <input type="text" class="acomp-input" placeholder="Nombre, Cédula y Edad" style="margin-bottom: 5px;">
                     </div>`;
             }
         }
@@ -253,47 +245,32 @@
         e.preventDefault();
         const btn = document.getElementById('btnTexto');
         const nombreResp = document.getElementById('nombre').value;
-        const telResp = document.getElementById('tel').value;
         
         btn.disabled = true;
         btn.innerText = "ENVIANDO DATOS... 🌊";
 
-        // Preparamos la lista de todos los pasajeros
-        let listaParaEnviar = [];
+        let acomps = "";
+        const inputsA = document.getElementsByClassName('acomp-input');
+        for(let i=0; i < inputsA.length; i++) {
+            acomps += "(" + (i+2) + ") " + inputsA[i].value + " | ";
+        }
 
-        // 1. Agregar al responsable
-        listaParaEnviar.push({
+        const datos = {
             "Responsable": nombreResp,
             "Cedula": document.getElementById('cedula').value,
             "Edad": document.getElementById('edad').value,
-            "Telefono": telResp,
+            "Telefono": document.getElementById('tel').value,
             "Cantidad": document.getElementById('cantidad').value,
-            "Acompanantes": "RESPONSABLE"
-        });
-
-        // 2. Agregar acompañantes (si hay) como filas individuales
-        const nombresA = document.getElementsByClassName('acomp-nombre');
-        const cedulasA = document.getElementsByClassName('acomp-cedula');
-        const edadesA = document.getElementsByClassName('acomp-edad');
-
-        for(let i=0; i < nombresA.length; i++) {
-            listaParaEnviar.push({
-                "Responsable": "Acompañante de " + nombreResp,
-                "Cedula": cedulasA[i].value,
-                "Edad": edadesA[i].value,
-                "Telefono": "Ver responsable",
-                "Cantidad": "-",
-                "Acompanantes": nombresA[i].value
-            });
-        }
+            "Acompanantes": acomps
+        };
 
         fetch('https://sheetdb.io/api/v1/2i9kwinmtej7k', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: listaParaEnviar })
+            body: JSON.stringify({ data: [datos] })
         })
         .then(res => {
-            alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨\n\nTodos los pasajeros han sido registrados.");
+            alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨\n\nPrepárate para la aventura.");
             location.reload();
         })
         .catch(error => {
