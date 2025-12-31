@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Pasajeros 🏖️ | Mariana Tour</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --azul-mar: #0077b6;
+            --arena: #f2e1ac;
+            --sol: #ffb703;
+            --coral: #ff6b6b;
+            --insta-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        body {
+            background-color: var(--arena);
+            background-image: linear-gradient(180deg, #90e0ef 0%, var(--arena) 100%);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .watermark {
+            position: fixed;
+            color: rgba(255, 255, 255, 0.4);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.94);
+            max-width: 480px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 3px solid var(--azul-mar);
+            position: relative;
+            z-index: 1;
+        }
+
+        .ubicacion {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--azul-mar);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .logo-placeholder {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--sol);
+        }
+
+        h1 {
+            color: var(--azul-mar);
+            text-align: center;
+            font-size: 22px;
+            margin: 10px 0;
+        }
+
+        .campo { margin-bottom: 15px; }
+        .fila-triple { display: flex; gap: 10px; margin-bottom: 5px; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; font-size: 14px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bde0fe;
+            border-radius: 15px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .acomp-box {
+            background: #e0f7fa;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            border-left: 6px solid var(--sol);
+        }
+
+        .btn-enviar {
+            background: var(--coral);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .promo-insta {
+            background: #fff5f8;
+            border: 2px dashed #e1306c;
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .promo-insta p {
+            margin: 0 0 12px 0;
+            color: #444;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .insta-link {
+            background: var(--insta-grad);
+            color: white !important;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 50px;
+            transition: transform 0.3s;
+        }
+
+        .insta-link:hover { transform: scale(1.05); }
+
+        .footer-info {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white !important;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: bold;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<i class="fas fa-palmtree watermark" style="top: 10%; left: 5%; font-size: 80px;"></i>
+<i class="fas fa-sun watermark" style="top: 40%; right: -10px; font-size: 100px;"></i>
+<i class="fas fa-fish watermark" style="bottom: 5%; left: 5%; font-size: 60px;"></i>
+<i class="fas fa-umbrella-beach watermark" style="bottom: 15%; right: 10%; font-size: 70px;"></i>
+
+<div class="container">
+    <div class="ubicacion">
+        <i class="fas fa-map-marker-alt"></i> San Cristóbal, Táchira 🇻🇪
+    </div>
+    
+    <div class="logo-placeholder">
+        <i class="fas fa-bus" style="font-size: 2.5rem; color: var(--azul-mar);"></i>
+    </div>
+
+    <h1>REGISTRO DE PASAJEROS 🏖️</h1>
+    
+    <div style="text-align:center; font-size: 1.5rem; margin-bottom: 15px;">🐬 🐢 🦀 🌴 🌊 ⛵</div>
+
+    <form id="registroForm">
+        <div class="campo">
+            <label>Nombre y Apellido (Responsable) 👤</label>
+            <input type="text" name="Responsable" id="nombre" placeholder="Nombre completo" required>
+        </div>
+
+        <div class="fila-triple">
+            <div style="flex: 2;">
+                <label>Cédula 🆔</label>
+                <input type="number" name="Cedula" id="cedula" placeholder="V-00.000.000" required>
+            </div>
+            <div style="flex: 1;">
+                <label>Edad 🎂</label>
+                <input type="number" name="Edad" id="edad" placeholder="Edad" required>
+            </div>
+        </div>
+
+        <div class="campo">
+            <label>Número de Teléfono 📱</label>
+            <input type="tel" name="Telefono" id="tel" placeholder="0412-0000000" required>
+        </div>
+
+        <div class="campo">
+            <label>¿Cuántos viajeros son en total? 🚌</label>
+            <input type="number" name="Cantidad" id="cantidad" min="1" value="1" oninput="agregarAcompanantes()">
+        </div>
+
+        <div id="listaAcompanantes"></div>
+
+        <button type="submit" class="btn-enviar" id="btnTexto">¡LISTO PARA EL VIAJE! 🏖️✨</button>
+    </form>
+
+    <div class="promo-insta">
+        <p>✨ <b>¡Tu próxima aventura comienza aquí!</b> ✨<br>
+        Síguenos en Instagram para descubrir fotos increíbles, rutas nuevas y ofertas exclusivas que solo verás allí. 📸✨</p>
+        <a href="https://www.instagram.com/marianatour_sc/" target="_blank" class="insta-link">
+            <i class="fab fa-instagram"></i> @marianatour_sc
+        </a>
+    </div>
+
+    <div class="footer-info">
+        <a href="https://wa.me/584127990031?text=Hola%20MarianaTour!%20Acabo%20de%20llenar%20mi%20registro" target="_blank" class="btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Contactar MarianaTour 📞
+        </a>
+        <p style="font-size: 12px; color: #777; font-style: italic; margin-top: 10px;">¡Escríbeme para cualquier duda o consulta! ✉️🌊</p>
+    </div>
+</div>
+
+<script>
+    function agregarAcompanantes() {
+        const cant = document.getElementById('cantidad').value;
+        const div = document.getElementById('listaAcompanantes');
+        div.innerHTML = '';
+        if (cant > 1) {
+            for (let i = 2; i <= cant; i++) {
+                div.innerHTML += `
+                    <div class="acomp-box">
+                        <label>Pasajero ${i} (Acompañante) 👥</label>
+                        <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;">
+                        <div class="fila-triple">
+                            <div style="flex: 2;">
+                                <input type="number" class="acomp-cedula" placeholder="Cédula">
+                            </div>
+                            <div style="flex: 1;">
+                                <input type="number" class="acomp-edad" placeholder="Edad">
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }
+    }
+
+    const form = document.getElementById('registroForm');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const btn = document.getElementById('btnTexto');
+        const nombreOriginal = document.getElementById('nombre').value;
+        
+        btn.disabled = true;
+        btn.innerText = "ENVIANDO DATOS... 🌊";
+
+        let acompañantesInfo = "";
+        const nombresA = document.getElementsByClassName('acomp-nombre');
+        const cedulasA = document.getElementsByClassName('acomp-cedula');
+        const edadesA = document.getElementsByClassName('acomp-edad');
+
+        for(let i=0; i < nombresA.length; i++) {
+            acompañantesInfo += `(${i+2}) ${nombresA[i].value}, CI: ${cedulasA[i].value}, Edad: ${edadesA[i].value} | `;
+        }
+
+        const datos = {
+            "Responsable": nombreOriginal,
+            "Cedula": document.getElementById('cedula').value,
+            "Edad": document.getElementById('edad').value,
+            "Telefono": document.getElementById('tel').value,
+            "Cantidad": document.getElementById('cantidad').value,
+            "Acompanantes": acompañantesInfo
+        };
+
+        fetch('https://sheetdb.io/api/v1/2i9kwinmtej7k', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: [datos] })
+        })
+        .then(res => {
+            alert("¡REGISTRO EXITOSO, " + nombreOriginal.toUpperCase() + "! 🌴✨\n\n¡Ya falta menos para disfrutar! 🌊\n\nVe alistando las maletas 🧳, el bloqueador solar 🧴 y los lentes de sol 😎, ¡que lo que vienen son diversiones y momentos inolvidables! 👙🐢🍹\n\nMariana Tour te espera con la mejor energía. ¡Nos vemos pronto! ☀️🚌");
+            location.reload();
+        })
+        .catch(error => {
+            alert("¡Uy! Hubo un error. Por favor inténtalo de nuevo o contactanos por WhatsApp.");
+            btn.disabled = false;
+            btn.innerText = "¡LISTO PARA EL VIAJE! 🏖️✨";
+        });
+    });
+</script>
+
+</body>
+</html>
