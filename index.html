@@ -245,6 +245,10 @@
                                 <input type="number" class="acomp-edad" placeholder="Edad">
                             </div>
                         </div>
+                        <div class="campo" style="margin-top: 10px;">
+                            <label>Teléfono (Acompañante) 📱</label>
+                            <input type="tel" class="acomp-tel" placeholder="Número de teléfono">
+                        </div>
                     </div>`;
             }
         }
@@ -262,6 +266,7 @@
         const nombresA = document.getElementsByClassName('acomp-nombre');
         const cedulasA = document.getElementsByClassName('acomp-cedula');
         const edadesA = document.getElementsByClassName('acomp-edad');
+        const telsA = document.getElementsByClassName('acomp-tel');
 
         let payload = [];
         
@@ -275,13 +280,13 @@
             "Acompanantes": "-"
         });
 
-        // Una fila nueva para cada acompañante
+        // Una fila nueva para cada acompañante con su teléfono incluido
         for(let i=0; i < nombresA.length; i++) {
             payload.push({
                 "Responsable": nombresA[i].value,
                 "Cedula": cedulasA[i].value,
                 "Edad": edadesA[i].value,
-                "Telefono": "-",
+                "Telefono": telsA[i].value || "-",
                 "Cantidad": "-",
                 "Acompanantes": "Grupo de: " + nombreResp
             });
