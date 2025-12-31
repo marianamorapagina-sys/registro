@@ -233,8 +233,18 @@
             for (let i = 2; i <= cant; i++) {
                 div.innerHTML += `
                     <div class="acomp-box">
-                        <label>Acompañante ${i} 👥</label>
-                        <input type="text" class="acomp-input" placeholder="Nombre, Cédula y Edad" style="margin-bottom: 5px;">
+                        <label>Nombre Acompañante ${i} 👥</label>
+                        <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;">
+                        <div class="fila-triple">
+                            <div style="flex: 2;">
+                                <label>Cédula</label>
+                                <input type="number" class="acomp-cedula" placeholder="Cédula">
+                            </div>
+                            <div style="flex: 1;">
+                                <label>Edad</label>
+                                <input type="number" class="acomp-edad" placeholder="Edad">
+                            </div>
+                        </div>
                     </div>`;
             }
         }
@@ -250,9 +260,12 @@
         btn.innerText = "ENVIANDO DATOS... 🌊";
 
         let acomps = "";
-        const inputsA = document.getElementsByClassName('acomp-input');
-        for(let i=0; i < inputsA.length; i++) {
-            acomps += "(" + (i+2) + ") " + inputsA[i].value + " | ";
+        const nombresA = document.getElementsByClassName('acomp-nombre');
+        const cedulasA = document.getElementsByClassName('acomp-cedula');
+        const edadesA = document.getElementsByClassName('acomp-edad');
+
+        for(let i=0; i < nombresA.length; i++) {
+            acomps += `(${i+2}) ${nombresA[i].value}, CI: ${cedulasA[i].value}, Edad: ${edadesA[i].value} | `;
         }
 
         const datos = {
@@ -270,11 +283,11 @@
             body: JSON.stringify({ data: [datos] })
         })
         .then(res => {
-            alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨\n\nPrepárate para la aventura.");
+            alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨");
             location.reload();
         })
         .catch(error => {
-            alert("¡Uy! Hubo un error.");
+            alert("Hubo un error.");
             btn.disabled = false;
             btn.innerText = "¡LISTO PARA EL VIAJE! 🏖️✨";
         });
