@@ -233,15 +233,15 @@
             for (let i = 2; i <= cant; i++) {
                 div.innerHTML += `
                     <div class="acomp-box">
-                        <label>Acompañante ${i} 👥</label>
+                        <label>Acompañante ${i} 👤</label>
                         <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;">
                         <div class="fila-triple">
                             <div style="flex: 2;">
-                                <label>Cédula</label>
+                                <label>Cédula 🆔</label>
                                 <input type="number" class="acomp-cedula" placeholder="Cédula">
                             </div>
                             <div style="flex: 1;">
-                                <label>Edad</label>
+                                <label>Edad 🎂</label>
                                 <input type="number" class="acomp-edad" placeholder="Edad">
                             </div>
                         </div>
@@ -265,17 +265,17 @@
 
         let payload = [];
         
-        // 1. Fila del Responsable
+        // Fila del Responsable
         payload.push({
             "Responsable": nombreResp,
             "Cedula": document.getElementById('cedula').value,
             "Edad": document.getElementById('edad').value,
             "Telefono": document.getElementById('tel').value,
             "Cantidad": document.getElementById('cantidad').value,
-            "Acompanantes": "-" 
+            "Acompanantes": "-"
         });
 
-        // 2. Filas de los acompañantes (una fila por cada uno)
+        // Una fila nueva para cada acompañante
         for(let i=0; i < nombresA.length; i++) {
             payload.push({
                 "Responsable": nombresA[i].value,
@@ -283,7 +283,7 @@
                 "Edad": edadesA[i].value,
                 "Telefono": "-",
                 "Cantidad": "-",
-                "Acompanantes": "Acomp de " + nombreResp
+                "Acompanantes": "Grupo de: " + nombreResp
             });
         }
 
@@ -293,7 +293,7 @@
             body: JSON.stringify({ data: payload })
         })
         .then(res => {
-            alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨");
+            alert("¡REGISTRO EXITOSO! 🌴✨");
             location.reload();
         })
         .catch(error => {
