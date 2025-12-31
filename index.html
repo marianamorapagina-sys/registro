@@ -90,6 +90,7 @@
             border-radius: 15px;
             margin-top: 15px;
             border-left: 6px solid var(--coral);
+            display: block; /* Asegura que se vea todo */
         }
 
         .btn-enviar {
@@ -234,20 +235,20 @@
                 div.innerHTML += `
                     <div class="acomp-box">
                         <label>Acompañante ${i} 👤</label>
-                        <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;">
+                        <input type="text" class="acomp-nombre" placeholder="Nombre completo" style="margin-bottom: 10px;" required>
                         <div class="fila-triple">
                             <div style="flex: 2;">
                                 <label>Cédula 🆔</label>
-                                <input type="number" class="acomp-cedula" placeholder="Cédula">
+                                <input type="number" class="acomp-cedula" placeholder="Cédula" required>
                             </div>
                             <div style="flex: 1;">
                                 <label>Edad 🎂</label>
-                                <input type="number" class="acomp-edad" placeholder="Edad">
+                                <input type="number" class="acomp-edad" placeholder="Edad" required>
                             </div>
                         </div>
-                        <div class="campo" style="margin-top: 10px;">
-                            <label>Teléfono (Acompañante) 📱</label>
-                            <input type="tel" class="acomp-tel" placeholder="Número de teléfono">
+                        <div style="margin-top: 10px;">
+                            <label>Teléfono 📱</label>
+                            <input type="tel" class="acomp-tel" placeholder="Número de teléfono" required>
                         </div>
                     </div>`;
             }
@@ -270,7 +271,6 @@
 
         let payload = [];
         
-        // Fila del Responsable
         payload.push({
             "Responsable": nombreResp,
             "Cedula": document.getElementById('cedula').value,
@@ -280,13 +280,12 @@
             "Acompanantes": "-"
         });
 
-        // Una fila nueva para cada acompañante con su teléfono incluido
         for(let i=0; i < nombresA.length; i++) {
             payload.push({
                 "Responsable": nombresA[i].value,
                 "Cedula": cedulasA[i].value,
                 "Edad": edadesA[i].value,
-                "Telefono": telsA[i].value || "-",
+                "Telefono": telsA[i].value,
                 "Cantidad": "-",
                 "Acompanantes": "Grupo de: " + nombreResp
             });
