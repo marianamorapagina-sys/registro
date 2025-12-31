@@ -179,28 +179,28 @@
     <form id="registroForm">
         <div class="campo">
             <label>Nombre y Apellido (Responsable) 👤</label>
-            <input type="text" name="Responsable" id="nombre" placeholder="Nombre completo" required>
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
         </div>
 
         <div class="fila-triple">
             <div style="flex: 2;">
                 <label>Cédula 🆔</label>
-                <input type="number" name="Cedula" id="cedula" placeholder="V-00.000.000" required>
+                <input type="number" id="cedula" placeholder="V-00.000.000" required>
             </div>
             <div style="flex: 1;">
                 <label>Edad 🎂</label>
-                <input type="number" name="Edad" id="edad" placeholder="Edad" required>
+                <input type="number" id="edad" placeholder="Edad" required>
             </div>
         </div>
 
         <div class="campo">
             <label>Número de Teléfono 📱</label>
-            <input type="tel" name="Telefono" id="tel" placeholder="0412-0000000" required>
+            <input type="tel" id="tel" placeholder="0412-0000000" required>
         </div>
 
         <div class="campo">
             <label>¿Cuántos viajeros son en total? 🚌</label>
-            <input type="number" name="Cantidad" id="cantidad" min="1" value="1" oninput="agregarAcompanantes()">
+            <input type="number" id="cantidad" min="1" value="1" oninput="agregarAcompanantes()">
         </div>
 
         <div id="listaAcompanantes"></div>
@@ -252,40 +252,52 @@
     form.addEventListener('submit', e => {
         e.preventDefault();
         const btn = document.getElementById('btnTexto');
-        const nombreOriginal = document.getElementById('nombre').value;
+        const nombreResp = document.getElementById('nombre').value;
+        const telResp = document.getElementById('tel').value;
         
         btn.disabled = true;
         btn.innerText = "ENVIANDO DATOS... 🌊";
 
-        let acompañantesInfo = "";
+        // Preparamos la lista de todos los pasajeros
+        let listaParaEnviar = [];
+
+        // 1. Agregar al responsable
+        listaParaEnviar.push({
+            "Responsable": nombreResp,
+            "Cedula": document.getElementById('cedula').value,
+            "Edad": document.getElementById('edad').value,
+            "Telefono": telResp,
+            "Cantidad": document.getElementById('cantidad').value,
+            "Acompanantes": "RESPONSABLE"
+        });
+
+        // 2. Agregar acompañantes (si hay) como filas individuales
         const nombresA = document.getElementsByClassName('acomp-nombre');
         const cedulasA = document.getElementsByClassName('acomp-cedula');
         const edadesA = document.getElementsByClassName('acomp-edad');
 
         for(let i=0; i < nombresA.length; i++) {
-            acompañantesInfo += `(${i+2}) ${nombresA[i].value}, CI: ${cedulasA[i].value}, Edad: ${edadesA[i].value} | `;
+            listaParaEnviar.push({
+                "Responsable": "Acompañante de " + nombreResp,
+                "Cedula": cedulasA[i].value,
+                "Edad": edadesA[i].value,
+                "Telefono": "Ver responsable",
+                "Cantidad": "-",
+                "Acompanantes": nombresA[i].value
+            });
         }
-
-        const datos = {
-            "Responsable": nombreOriginal,
-            "Cedula": document.getElementById('cedula').value,
-            "Edad": document.getElementById('edad').value,
-            "Telefono": document.getElementById('tel').value,
-            "Cantidad": document.getElementById('cantidad').value,
-            "Acompanantes": acompañantesInfo
-        };
 
         fetch('https://sheetdb.io/api/v1/2i9kwinmtej7k', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: [datos] })
+            body: JSON.stringify({ data: listaParaEnviar })
         })
         .then(res => {
-            alert("¡REGISTRO EXITOSO, " + nombreOriginal.toUpperCase() + "! 🌴✨\n\n¡Ya falta menos para disfrutar! 🌊\n\nVe alistando las maletas 🧳, el bloqueador solar 🧴 y los lentes de sol 😎, ¡que lo que vienen son diversiones y momentos inolvidables! 👙🐢🍹\n\nMariana Tour te espera con la mejor energía. ¡Nos vemos pronto! ☀️🚌");
+            alert("¡REGISTRO EXITOSO, " + nombreResp.toUpperCase() + "! 🌴✨\n\nTodos los pasajeros han sido registrados.");
             location.reload();
         })
         .catch(error => {
-            alert("¡Uy! Hubo un error. Por favor inténtalo de nuevo o contactanos por WhatsApp.");
+            alert("¡Uy! Hubo un error.");
             btn.disabled = false;
             btn.innerText = "¡LISTO PARA EL VIAJE! 🏖️✨";
         });
